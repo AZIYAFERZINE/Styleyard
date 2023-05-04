@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="/assets/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+
+<section>
+    <div class="container">
+      <%
+      if(typeof message !="undefined"){
+        %>
+        <p style="color: rgb(255, 140, 0);"><%= message %></p>
+      <% } %>
+      <div class="vh-100 d-flex justify-content-center align-items-center">
+        <div class="col-md-5 shadow-sm border rounded-5 border-primary bg-white">
+          <h2 class="text-center mb-4 text-primary"></h2>OTP form
+          <form class="OTP" id="OTP" action="/forgototp" method="post">
+            <div class="mb-3">
+              <label for="Otp" class="form-label">Enter OTP</label>
+              <input type="text" id="otp" name="otp" class="form-control border border-primary">
+            </div>
+            <h6 class="m-0 text-dark mt-3">Time Left: <span id="countdown"></span></h6>
+            <div class="d-grid">
+              <button class="btn-primary" type="submit" style="background-color: rgb(166, 85, 85);">continue</button>
+            </div>
+            <input type="hidden" name="serverotp" name= "<%= otp %>">
+            
+            
+              
+            <input type="hidden" name="name" value="<%=userData.name%>">
+            <input type="hidden" name="email" value="<%=userData.email%>">
+            <input type="hidden" name="phone" value="<%=userData.phone%>">
+            <input type="hidden" name="password" value="<%=userData.password%>">
+             
+          </form>
+          <form action="/resendotp" method="POST">
+            <button id="resendButton" type="submit" class="btn-link" style="background-color: rgb(166, 85, 85);">Resend OTP</button>
+          </form>
+          <script>
+            const startCountdown = () => {
+              let seconds = 30 // set the countdown time
+              const countdownDisplay = document.querySelector('#countdown');
+              const resendButton = document.querySelector('#resendButton');
+              countdownDisplay.textContent = seconds; // initialize the countdown display
+              
+
+              const timer = setInterval(() => {
+                seconds--;
+                countdownDisplay.textContent = seconds;
+                resendButton.disabled = true; // update the countdown display
+          
+                if (seconds === 0) {
+                  clearInterval(timer); // stop the countdown
+                  countdownDisplay.textContent = ''; // clear the countdown display
+                  resendButton.disabled = false; // enable the resend button
+                }
+              }, 1000);
+            };
+          
+            // Call startCountdown() when the page loads to start the countdown
+            startCountdown();
+            const resendButton = document.querySelector('#resendButton');
+resendButton.addEventListener('click', () => {
+  // Disable the resend button and start the countdown
+  resendButton.disabled = true;
+  startCountdown();
+
+  // Make an AJAX call to the server to resend the OTP
+  fetch('/resendotp', {
+    method: 'POST',
+    body: JSON.stringify({
+      name: '<%= userData.name %>',
+      email: '<%= userData.email %>',
+      phone: '<%= userData.phone %>',
+      password: '<%= userData.password %>'
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    // Handle the response from the server
+    if (response.ok) {
+      // The resend was successful, do something here if needed
+    } else {
+      // There was an error, handle it here
+    }
+  })
+  .catch(error => {
+    // Handle any errors that occurred during the AJAX call
+  });
+});
+
+
+          
+            
+          
+    </script>
+  
+        </div>
+  
+      </div>
+  
+    </div>
+  </section>
+  <style>
+    .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.col-md-5 {
+  max-width: 500px;
+  text-align: center;
+}
+
+.OTP {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-primary {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.btn-link {
+  margin-top: 10px;
+}
+
+  </style>
+</body>
+</html>

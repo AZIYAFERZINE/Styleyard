@@ -1,0 +1,702 @@
+<%- include("layouts/header") %>
+ <!-- Breadcrumb Begin -->
+ <div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a href="/" class="stext-109 cl8 hov-cl1 trans-04">
+            Home
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+        <a href="/cartload" class="stext-109 cl8 hov-cl1 trans-04">
+            Cart
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+
+        <span class="stext-109 cl4">
+          Checkout
+        </span>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+<style>
+    .checkout {
+  background-color: #f9f9f9;
+  padding: 60px 0;
+}
+
+.checkout__form h5 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.checkout__form p {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.checkout__form__input input {
+  background-color: #f4f4f4;
+  border: none;
+  border-radius: 4px;
+  color: #333;
+  font-size: 14px;
+  padding: 12px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.checkout__form__input input:focus {
+  outline: none;
+}
+
+.checkout__form__input input::placeholder {
+  color: #999;
+}
+
+.checkout__form__checkbox label {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.checkout__form__checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkout__form__checkbox input[type="checkbox"]:checked + label:before {
+  content: "\f00c";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 16px;
+  color: #0b8;
+  position: absolute;
+  left: 0;
+  top: 2px;
+}
+
+.checkout__form__checkbox input[type="checkbox"]:focus + label:before {
+  box-shadow: 0 0 0 3px rgba(0, 187, 204, 0.2);
+}
+
+.checkout__form__checkbox input[type="checkbox"]:checked:focus + label:before {
+  box-shadow: 0 0 0 3px rgba(0, 187, 204, 0.2);
+}
+
+.checkout__order h5 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.checkout__order__product ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.checkout__order__product li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.checkout__order__product li span:last-child {
+  font-weight: 700;
+}
+
+.discount__content input {
+  background-color: #f4f4f4;
+  border: none;
+  border-radius: 4px;
+  color: #333;
+  font-size: 14px;
+  padding: 12px;
+  margin-bottom: 20px;
+  width: 100%;
+  margin-right: 1rem;
+}
+
+.discount__content input:focus {
+  outline: none;
+}
+
+.checkout__form__button button {
+  background-color: rgb(148, 64, 64);
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 30px;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.checkout__form__button button:hover {
+  background-color: #994545;
+}
+  .site-btn {
+  background-color: #9d434c; /* Set the background color */
+  border: none; /* Remove border */
+  color: white; /* Set text color */
+  padding: 12px 24px; /* Set padding */
+  text-align: center; /* Center text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make it an inline element */
+  font-size: 16px; /* Set font size */
+  margin: 10px; /* Add some margin */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.checkout__order {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.checkout__order h5 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.checkout__order__product ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.checkout__order__product li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.checkout__order__product li span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.checkout__order__total ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.checkout__order__total li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.checkout__order__total li span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.checkout__order__widget {
+    margin-top: 20px;
+}
+
+.checkout__order__widget label {
+    font-size: 16px;
+}
+
+.site-btn {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.site-btn:hover {
+    background-color: #444;
+}
+/* Style the radio buttons */
+.custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #a64040;
+    border-color: #943d3d;
+}
+.custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+.custom-control-label::before {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    content: "";
+    display: inline-block;
+    height: 1.25rem;
+    margin-right: 0.5rem;
+    position: relative;
+    top: 0.25rem;
+    width: 1.25rem;
+}
+.custom-control-input:disabled ~ .custom-control-label {
+    color: #6c757d;
+}
+.custom-control-input:disabled ~ .custom-control-label::before {
+    background-color: #e9ecef;
+}
+.custom-control-label {
+    cursor: pointer;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.address-selection-card {
+  border: 1px solid #ddd;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  background-color: #fff;
+}
+
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+h5 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+}
+
+.btn-default {
+  background-color: #87404d;
+}
+
+.btn-danger {
+  background-color:#87404d ;
+}
+
+.btn-default:hover,
+.btn-danger:hover {
+  opacity: 0.8;
+}
+
+.container-fluid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+/* Style for select element */
+select {
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  padding: 10px 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  appearance: none;
+  background-color: #fff;
+  color: #333;
+}
+
+/* Style for select options */
+select option {
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  color: #383838;
+}
+
+/* Style for selected option */
+select option:checked {
+  background-color: #ccc;
+  color: #fff;
+}
+
+</style>
+   <!-- Checkout Section Begin -->
+   <section class="checkout spad">
+    <div class="container">
+        <div class="row">
+            
+        <form action="/placeorder" method="post" class="checkout__form" style="margin-top: 2rem;">
+            
+            <div class="col-lg-4">
+                <h6>DISCOUNT CODE</h6>
+                <div class="input-group" style="margin-bottom: 20px;">
+                    <input name="coupon" id="coupon">
+
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-dark" onclick="apply()">Apply</button>&nbsp; &nbsp;
+                        <a data-toggle="modal" class="btn btn-dark" type="button"
+                            href="#exampleModalScrollable1">Show Coupons</a>
+                    </div>
+                </div>
+            </div>
+            <h6 style="color: red;" id="msg"></h6>
+            <div class="row">
+                <div class="col-lg-6">
+                    
+                    <div class="row">
+                        <h5 class="section-title position-relative text-uppercase mb-3"><span class=" pr-3" style="color: #000000;">Choose Address</span></h5>
+                        <div class="row p-4 rounded container-fluid">
+                            <!-- <div class="style"> -->
+                            <% for(i=0;i<address.length;i++){%>
+                            <div class="address-selection-card" style="width: 16rem" >
+                                    <input type="radio" name="address" id="addressid" value="<%=address[i]._id%>" required>
+                                    <label>
+                                      <h5><%=i+1%></h5>
+                                    <%=address[i].firstname%> 
+                                    <%=address[i].lastname%>
+                                    <br>
+                                    <%=address[i].address%>
+                                    <br>
+                                    <%=address[i].state%>
+                                    <br>
+                                    <%=address[i].city%>
+                                    <br>
+                                    <%=address[i].country%>
+                                    <br>
+                                    <%=address[i].zip%>
+                                    <br>
+                                    <%=address[i].phone%>
+                                    <%=address[i].email%>
+
+                                  </label>
+                                  <a href="/editcheckoutaddress?id=<%=address[i]._id%>"><button style="margin-left: 5%;" type="button" class="btn-default">edit</button></a>
+                                  <a href="/deletecheckoutaddress?id=<%=address[i]._id%>"><button type="button" class="btn-danger">delete</button></a>
+                                </div>
+                                <%}%>
+                            </div>
+                        <hr>
+                        <a href="/addfromcheckout"><button style="margin-left: 2rem;" type="button" class="btn-sm btn-dark" >Add address</button></a>
+
+                       
+
+                        <!-- <h5 class="section-title position-relative text-uppercase mb-3"><span class=" pr-3" style="color: #000000;">Choose Address</span></h5> -->
+                       
+                        <div class="col-lg-12">
+                            <div class="checkout__form__checkbox">
+                               
+                               
+                                </div>
+                                <div class="checkout__form__input">
+                                  
+                                </div>
+                                <div class="checkout__form__checkbox">
+                                    
+                                </div>
+                                <div class="checkout__form__input">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="checkout__order">
+                            <h5>Your order</h5>
+                            <div class="checkout__order__product">
+                                <ul>
+                                    <li>
+                                        <span class="top__text">Product</span>
+                                        <span class="top__text__right">Total</span>
+                                    </li>
+                                    <% for(let key of checkoutdetails.item){ %>
+                                    <li><%=key.productId.name%><span>Rs.<%=key.productId.oprice*key.quantity%></span></li>
+                                    <%}%>
+
+                                </ul>
+                            </div>
+                            <div class="checkout__order__total">
+                                <ul>
+                                    <li>Subtotal <span>Rs.<%=checkoutdetails.totalprice%></span></li>
+                                    <li><input type="hidden" id="subtotal" value="<%=checkoutdetails.totalprice%>"> <span>Rs <%=checkoutdetails.totalprice%></span></li>
+                                </ul>
+                                <ul class="d-flex justify-content-between">
+                                    <li  class="font-weight-medium">Discount</li>
+                                    <li id="dis" class="font-weight-medium">--</li>
+                                </ul>
+                                <ul class="d-flex justify-content-between">
+                                    <li  class="font-weight-medium">Reduction Amount</li>
+                                    <li id="amt" class="font-weight-medium">--</li> 
+                                    <input type="hidden" id="red" name="reduction">
+                                </ul>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <h5>Total</h5>
+                                    <h5 id="gT">Rs.<%=checkoutdetails.totalprice%></h5>
+                                    <input id="last" type="hidden" value="<%=checkoutdetails.totalprice%>" name="amount">
+                                </div>
+                            </div>
+                            <div class="mb-5">
+                            <div class=" p-30 mb-4">
+                                <div class="form-group">
+                                  <div class="custom-control custom-radio">
+                                    <h6><i class="fa-solid fa-wallet"></i> &nbsp;&nbsp; Wallet Balance</h6>
+                                    <input type="checkbox" class="custom-control-input" onchange="val('<%=wallet%>')"
+                                        name="payment" id="wallet" value="wallet">
+                                    <label class="custom-control-label" for="wallet">Rs <%=wallet%></label>
+                                    <input type="hidden" id="walamount" name="walamount" value="<%=wallet%>">
+                                    <input type="hidden" name="cost" id="payable"
+                                        value="<%=checkoutdetails.totalprice%>">
+
+                                </div>
+                                </div>
+                            </div>
+                           
+
+                            <h5 class="section-title position-relative text-uppercase mb-3"><span
+                                class=" pr-3">Payment</span></h5>
+                               <div class=" p-30">
+                           
+                                <div class="form-group">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" name="payment" id="COD" value="COD">
+                                        <label class="custom-control-label" for="COD">Cash on delivery</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" name="payment" id="Online" value="Online">
+                                        <label class="custom-control-label" for="Online">Online payment</label>
+                                    </div>  
+                                </div>
+                                
+                            
+                            <button type="submit" class="site-btn">Place order</button>
+                               </div>
+                            </div>
+                        
+
+
+                        </div>
+
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+             </div>
+
+
+        </form>
+    </div>
+        
+</section>
+<!--model start-->
+<div class="modal fade" id="exampleModalScrollable1" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-scrollable" role="document">
+   <div class="modal-content">
+       <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalScrollableTitle">Coupons</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+           </button>
+       </div>
+       <div class="modal-body">
+           <input type="hidden" id="total" value="<%=coupon.length %>">
+           <% for(i=0;i<coupon.length;i++){ %>
+               <% if(coupon[i].isAvailable ){%>
+                   <div class="form-group row">
+                       <div class="col-md-12">
+                           <span style="color: crimson;font-size:x-large;"><strong id="<%=coupon[i]._id%>">
+                                   <%= coupon[i].name %>
+                               </strong></span>
+                           <button id="copy-btn" style="border: none; color: #000;"
+                               onclick="copyText('<%=coupon[i]._id%>')"><i
+                                   class="fa-regular fa-copy"></i></button>
+                           <h6>
+                               <%=coupon[i].description %>
+                           </h6>
+                           <h6>Min cart value-<%= coupon[i].minimumvalue%>
+                           </h6>
+                           <h6 id="<%=i%>exp">expires in <%=coupon[i].expirydate.toDateString()%>
+                           </h6>
+
+  
+                           <!-- <label for="c_fname" class="text-black">Coupon Name <span class="text-danger">*</span></label> -->
+                           <!-- <input type="text" class="form-control"  name="couponname"> -->
+                       </div>
+
+
+
+
+                   </div>
+                   <hr>
+                   <%}%> 
+                       <% } %>
+                           <div class="modal-footer">
+                               <button type="button" class="btn btn-secondary"
+                                   data-dismiss="modal">Close</button>
+                               <!-- <button type="submit" class="btn btn-primary">Save changes</button> -->
+                           </div>
+       </div>
+   </div>
+</div>
+</div>
+
+                        <!--model end-->
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script>
+                            function copyText(id) {
+                                const textToCopy = document.getElementById(id).innerHTML;
+                                navigator.clipboard.writeText(textToCopy).then(() => {
+                                  
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Coupon copied successfully!',
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                    });
+                    
+                                }, () => {
+                                    // alert('Failed to copy text');
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Failed to copy',
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                    });
+                    
+                                });
+                            };
+                    
+                        </script>
+    <script>
+           function val(p) {
+        waldata = parseInt(p)
+        const last = document.getElementById("last").value;
+        wallet = parseInt(last);
+        if (document.getElementById('wallet').checked) {
+
+            if (waldata >= wallet) {
+                console.log(wallet, waldata);
+                document.getElementById('COD').setAttribute("disabled", "")
+                document.getElementById('COD').checked = false;
+                //  document.getElementById("payable").value=0;
+
+                document.getElementById('Online').setAttribute("disabled", "")
+                document.getElementById('Online').checked = false;
+
+
+            } else {
+                balance = wallet - waldata;
+                document.getElementById("COD").unchecked = true;
+                document.getElementById("Online").checked = true;
+                document.getElementById('COD').setAttribute("disabled", "")
+                document.getElementById("payable").value = balance;
+                console.log(document.getElementById("payable").value);
+            }
+
+
+        } else {
+            document.getElementById('COD').removeAttribute("disabled", "")
+            document.getElementById('Online').removeAttribute("disabled", "")
+        }
+    }
+
+        function apply() {
+            console.log("sample");
+            cop = document.getElementById('coupon').value.trim()
+            console.log(cop);
+            subT = document.getElementById('subtotal').value
+            console.log(subT);
+            $.ajax({
+                url: '/applycoupon',
+                type: 'POST',
+                data: { coupon: cop, totalValue: subT },
+                success: function (data) {
+                    console.log(data);
+                if (data.state) {
+                    total = subT - data.disc;
+                    document.getElementById('dis').innerHTML = data.offerdata.discount + "%";
+                    document.getElementById('amt').innerHTML = "Rs " + data.disc
+                    document.getElementById('red').value =   data.disc
+                    document.getElementById('gT').innerHTML = total
+                    //  document.getElementById('last').value=total;
+                    // console.log(  document.getElementById('final').value);
+                    document.getElementById("payable").value = total;
+                    console.log(data);
+                } else {
+                    document.getElementById("msg").innerHTML = data.messag;
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
+
+        }
+
+
+
+
+    </script>
+    <style>
+      .form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.custom-control.custom-radio {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.custom-control-input {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.custom-control-label {
+  display: inline-block;
+  font-size: 18px;
+  margin-left: 5px;
+}
+
+.fa-wallet {
+  display: inline-block;
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+#exampleModalScrollable1 {
+  top: 150px;
+}
+
+
+    </style>
+    <!-- Checkout Section End -->
+
+   <%- include("layouts/footer") %>
+    <!-- Checkout Section End -->
+  

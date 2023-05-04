@@ -1,0 +1,485 @@
+<%- include("layouts/header") %>
+<style>
+	/* Style for plus-minus input group */
+.plus-minus-input {
+  display: flex;
+  align-items: center;
+}
+
+.input-group-button {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.input-group-button button {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+/* Style for minus button */
+.input-group-button button[data-quantity="minus"] {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* Style for plus button */
+.input-group-button button[data-quantity="plus"] {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+</style>
+
+
+	<!-- breadcrumb -->
+	<div class="container">
+		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+			<a href="/" class="stext-109 cl8 hov-cl1 trans-04">
+				Home
+				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+			</a>
+
+			<span class="stext-109 cl4">
+				Shoping Cart
+			</span>
+		</div>
+	</div>
+		
+	<% if(cartproducts.item.length==0){%>
+		<section class="shop-cart spad"  style="text-align: center;">
+			<tr>
+				<td colspan="5">Your cart is Empty</td>
+				<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+					<a href="/products" style="color: rgb(78, 82, 82);">GO TO SHOP</a>
+				</div>
+			</tr>
+		
+		<%}else{%>
+	<!-- Shoping Cart -->
+	<form class="bg0 p-t-75 p-b-85">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+					<div class="m-l-25 m-r--38 m-lr-0-xl">
+						<div class="wrap-table-shopping-cart">
+							<table class="table-shopping-cart">
+								<tr class="table_head">
+									<th class="column-1">Product</th>
+									<th class="column-2"></th>
+									<th class="column-3">Price</th>
+									<th  class="column-4" style="padding-right: 85px;">Quantity</th>
+									<th class="column-5" style="padding-right: 84px;">Total</th>
+									<th class="column-6" style="padding-right: 10px; color: rgb(255, 255, 255);">total</th>
+								</tr>
+								<% for(let i=0;i<cartproducts.item.length;i++){ %>
+								<tr class="table_row">
+                                     <td class="column-1"> 
+										<div class="how-itemcart1">
+											<img src="/uploads/<%= cartproducts.item[i].productId.image[0] %>"style="height: 60px; width: 60px;" alt="">
+											
+										</div>
+									</td>
+									<td class="column-2"><%=cartproducts.item[i].productId.name%></td>
+									<td class="column-3">Rs <%=cartproducts.item[i].productId.oprice%></td>
+									<td class="column-4" style="padding-left: 30px;">
+
+
+										<div class="input-group plus-minus-input" style="justify-content: center; margin-left: -3rem;">
+											<div class="input-group-button">
+											  <button type="button" class="button hollow circle btn-primary"  data-quantity="minus" data-field="<%=cartproducts.item[i].productId._id%>"  onclick="update('<%=cartproducts.item[i].productId._id%>',0,'<%=i%>') " style="background-color: rgb(150, 82, 82);">
+												<i class="fa fa-minus" aria-hidden="true"></i>
+											  </button>
+											</div>
+											<input class="input-group-field text-center" min="1" type="number" name="quantity" value="<%=cartproducts.item[i].quantity%>" id='<%=cartproducts.item[i].productId._id%>'  style="width: 20% " disabled="disabled">
+
+											<div class="input-group-button">
+											  <button type="button" class="button hollow circle btn-primary" data-quantity="plus" data-field="<%=cartproducts.item[i].productId._id%>"  onclick="update('<%=cartproducts.item[i].productId._id%>','<%-cartproducts.item[i].productId.stock%>','<%=i%>')" style="background-color: rgb(150, 82, 82);">
+												<i class="fa fa-plus" aria-hidden="true"></i>
+											  </button>
+											</div>
+										  </div> 
+										
+									</td>
+									<!-- <div class="input-group plus-minus-input" style="justify-content: center; margin-left: -3rem;">
+										<div class="input-group-button">
+										  <button type="button" class="button hollow circle btn-primary" data-quantity="minus" data-field="<%=cartproducts.item[i].productId._id%>" onclick="update('<%=cartproducts.item[i].productId._id%>',0,'<%=i%>') " style="background-color: rgb(150, 82, 82);">
+											<i class="fa fa-minus" aria-hidden="true"></i>
+										  </button>
+										</div>
+										
+										<% if (cartproducts.item[i].productId.stock == 0) { %>
+										  <span style="color:red;">Out of stock</span>
+										<% } else { %>
+										  <input class="input-group-field text-center" min="1" type="number" name="quantity" value="<%=cartproducts.item[i].quantity%>" id='<%=cartproducts.item[i].productId._id%>'  style="width: 20% " disabled="disabled">
+										<% } %>
+									  
+										<div class="input-group-button">
+										  <% if (cartproducts.item[i].productId.stock > 0) { %>
+											<button type="button" class="button hollow circle btn-primary" data-quantity="plus" data-field="<%=cartproducts.item[i].productId._id%>" onclick="update('<%=cartproducts.item[i].productId._id%>','<%-cartproducts.item[i].productId.stock%>','<%=i%>')" style="background-color: rgb(150, 82, 82);">
+											  <i class="fa fa-plus" aria-hidden="true"></i>
+											</button>
+										  <% } %>
+										</div>
+									  </div> -->
+									  
+
+									<td class="column-5"  style="padding-right: 80px;" ><h6  id="<%=i%>" >Rs <%=cartproducts.item[i].productId.oprice*cartproducts.item[i].quantity%></h6></td> <td class="column-6" >
+										
+											<a href="#" onclick="confirmDelete('<%= cartproducts.item[i].productId._id %>')">
+										  <span class="icon_close"></span>
+										</a>
+									</td>
+							</tr>
+									  <% } %>	
+							</table>
+						</div>
+
+						<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+							<!-- <div class="flex-w flex-m m-r-20 m-tb-5">
+								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
+									
+								<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+									Apply coupon
+								</div>
+							</div> -->
+
+							<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+								<a href="/products" style="color: rgb(78, 82, 82);">GO TO SHOP</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+					<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+						<h4 class="mtext-109 cl2 p-b-30">
+							Cart Totals
+						</h4>
+
+						<div class="flex-w flex-t bor12 p-b-13">
+							<div class="size-208">
+								<span class="stext-110 cl2">
+									Total :
+								</span>
+							</div>
+
+							<div class="size-209">
+								<span class="mtext-110 cl2" id="total">
+									Rs<%=cartproducts.totalprice%>
+								</span>
+							</div>
+						</div>
+
+						<div style="padding-top: 30px;">
+                           <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" >
+							<a href="/checkoutload" style="color: azure;">
+							Proceed to Checkout
+						    </a>
+						   </button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<% } %>
+	</form>
+		
+	
+	
+
+	
+	<!-- Footer -->
+	<footer class="bg3 p-t-75 p-b-32">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Categories
+					</h4>
+
+					<ul>
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Clothing
+							</a>
+						</li>
+
+						
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Shoes
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Bags
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Help
+					</h4>
+
+					<ul>
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Track Order
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Returns 
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Shipping
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								FAQs
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						GET IN TOUCH
+					</h4>
+
+					<p class="stext-107 cl7 size-201">
+						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+					</p>
+
+					<div class="p-t-27">
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-facebook"></i>
+						</a>
+
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-instagram"></i>
+						</a>
+
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-pinterest-p"></i>
+						</a>
+					</div>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Newsletter
+					</h4>
+
+					<form>
+						<div class="wrap-input1 w-full p-b-4">
+							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
+							<div class="focus-input1 trans-04"></div>
+						</div>
+
+						<div class="p-t-18">
+							<button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+								Subscribe
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		
+
+				<p class="stext-107 cl6 txt-center">
+					
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Aziya</a> &amp; distributed by <a href="https://themewagon.com" target="_blank">Designed by Aziya</a>
+
+				</p>
+			</div>
+		</div>
+	</footer>
+
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+
+<!--===============================================================================================-->	
+	<script src="/assets/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/assets/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/assets/vendor/bootstrap/js/popper.js"></script>
+	<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/assets/vendor/select2/select2.min.js"></script>
+	<script>
+		$(".js-select2").each(function(){
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="/assets/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+	
+	<script>
+		$('.js-pscroll').each(function(){
+			$(this).css('position','relative');
+			$(this).css('overflow','hidden');
+			var ps = new PerfectScrollbar(this, {
+				wheelSpeed: 1,
+				scrollingThreshold: 1000,
+				wheelPropagation: false,
+			});
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="/assets/js/main.js"></script>
+	
+		
+    <!-- Shop Cart Section End -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+
+    <script>
+          jQuery(document).ready(function () {
+                        // This button will increment the value
+                        $('[data-quantity="plus"]').click(function (e) {
+                            // Stop acting like a button
+                            e.preventDefault();
+                            // Get the field name
+                            fieldName = $(this).attr('data-field');
+                            // Get its current value
+                            Val = $('input[name=' + fieldName + ']').val()
+                            console.log(Val);
+                            var values = Val.split(',')
+                            var currentVal = parseInt(values[0])
+                            var stock = parseInt(values[1])	
+                            console.log(currentVal, stock);
+                            // If is not undefined
+                            if (!isNaN(currentVal)) {
+                                // Increment
+                                if (currentVal == stock) {
+                                    console.log("hey") 
+                            swal({
+                                title: "Error!",
+                                text: "product is out of stock",
+                                icon: "error",
+                                button: "OK",
+                            });
+
+
+                                } else {
+                                    $('input[name=' + fieldName + ']').val(currentVal + 1);
+                                }
+                            } else {
+                                // Otherwise put a 0 there
+                                $('input[name=' + fieldName + ']').val(0);
+                            }
+                        });
+                        // This button will decrement the value till 0
+                        $('[data-quantity="minus"]').click(function (e) {
+                            // Stop acting like a button
+                            e.preventDefault();
+                            // Get the field name
+                            fieldName = $(this).attr('data-field');
+                            // Get its current value
+                            Val = $('input[name=' + fieldName + ']').val()
+                            console.log(Val);
+                            var values = Val.split(',')
+                            var currentVal = parseInt(values[0])
+                            // If it isn't undefined or its greater than 0
+                            if (!isNaN(currentVal) && currentVal > 1) {
+                                // Decrement one
+                                $('input[name=' + fieldName + ']').val(currentVal - 1);
+                            } else {
+                                // Otherwise put a 0 there
+                                $('input[name=' + fieldName + ']').val(1);
+                            }
+                        });
+                    });
+        function update( id,plus,amt ) {
+            
+            currentqty = document.getElementById(id)
+                        console.log(plus, amt);
+                        if (plus) {
+                            if (currentqty.value < parseInt(plus)) {
+                                currentqty.parentNode.querySelector('input[type=number]').stepUp();
+                            }
+                        } else {
+                            currentqty.parentNode.querySelector('input[type=number]').stepDown()
+                        }
+                        setTimeout(() => {
+                            console.log("currrent====" + currentqty.value);
+                            console.log('qty==' + currentqty.value);
+                            let quantity = document.getElementById(id).value;
+                            console.log(currentqty.value, plus);
+                            if (currentqty.value == plus && currentqty.value == 0) {
+                                console.log(currentqty.value, plus);
+                            } else {
+
+                                $.ajax({
+                                    url: '/updatecart',
+                                    type: 'POST',
+                                    data: { Quantity: quantity, _id: id },
+                                    success: function (data) {
+                                        console.log(data.test);
+                                        document.getElementById("total").innerHTML = "Rs " + data.test;
+                                        console.log(data.test);
+                                        console.log('amt'+quantity * data.oprice);
+                                        console.log(amt);
+                                        document.getElementById(amt).innerHTML ='Rs ' +quantity * data.oprice;
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        console.log(textStatus, errorThrown);
+                                    }
+                                })
+                            }
+                        }, 50);
+                    }   
+    </script>
+	
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+function confirmDelete(productId) {
+  swal({
+    title: "Are you sure?",
+    text: "This item will be removed from your cart.",
+    icon: "warning",
+    buttons: ["Cancel", "Delete"],
+    dangerMode: true,
+  })
+  .then((willDelete) => {
+    if (willDelete) {
+      window.location.href = "/removefromcart?productId=" + productId;
+    }
+  });
+}
+</script>
+
+</body>
+</html>
+
+	

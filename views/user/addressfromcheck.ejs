@@ -1,0 +1,142 @@
+ <!-- Breadcrumb Begin -->
+ <div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a href="/" class="stext-109 cl8 hov-cl1 trans-04">
+            Home
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+
+        <span class="stext-109 cl4">
+            Address form
+        </span>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+<section class="bg0 p-t-40 p-b-116">
+    <div class="container">
+        <div class="flex-w flex-tr">
+            <div class="size-210 bor10 p-lr-70 p-t-20 p-b-70 p-lr-15-lg w-full-md">
+<h2>Add Address</h2>
+<form id="address-form" action="/addaddress" method="post" class="bg-light rounded-5 p-4">
+    <label>Firstname *</label>
+    <input type="text" id="firstname" class="form-control" name="firstname" placeholder="First name"
+    
+        required>
+
+    <label>Last Name *</label>
+    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last name"
+   
+        required>
+
+
+
+    <label>Country *</label>
+    <input type="text" class="form-control" name="country" id="country" placeholder="Country"
+  
+        required>
+
+    <label>Address *</label>
+    <input type="text" class="form-control" name="address" id="address" placeholder="Address"
+   
+        required>
+
+
+    <div class="row">
+        <div class="col-sm-6">
+            <label>Town / City *</label>
+            <input type="text" class="form-control" name="city" id="city" placeholder="City"
+          
+                required>
+        </div><!-- End .col-sm-6 -->
+
+        <div class="col-sm-6">
+            <label>State / County *</label>
+            <input type="text" class="form-control" id="state" name="state" placeholder="State"
+          
+                required>
+        </div><!-- End .col-sm-6 -->
+    </div><!-- End .row -->
+
+    <div class="row">
+        <div class="col-sm-6">
+            <label>Postcode / ZIP *</label>
+            <input type="text" class="form-control" name="zip" id="zip"
+                placeholder="Postcode/ZIP"   required>
+        </div><!-- End .col-sm-6 -->
+
+        <div class="col-sm-6">
+            <label>Phone *</label>
+            <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone"
+           
+                required>
+        </div>
+        <div class="col-sm-6">
+            <label>Email *</label>
+            <input type="tel" class="form-control" name="email" id="email" placeholder="Email"
+           
+                required>
+        </div>
+    </div>
+
+<button class="btn-primary" type="submit">Save Address</button>
+</form>
+</div>
+</div>
+</section>
+<style>
+    /* Style for the form container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Style for the form title */
+h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+/* Style for the form inputs */
+label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="tel"] {
+  width: 100%;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus {
+  border-color: #a95858;
+  outline: none;
+}
+
+/* Style for the form buttons */
+button {
+  display: inline-block;
+  background-color: #a95858;
+  color: #fff;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color:#a95858;
+}
+
+</style>

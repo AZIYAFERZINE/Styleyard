@@ -1,0 +1,101 @@
+<%- include("layouts/sidebar") %>
+<%- include("layouts/header") %>
+
+<main>
+      <section class="content-main">
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title">Coupons </h2>
+                <p>Add, edit or delete coupons</p>
+            </div>
+        </div>
+       
+    
+     <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <form action="/admin/addcoupon" method="post">
+                        <div class="mb-4">
+                            <label for="product_name" class="form-label">Name</label>
+                            <input type="text" name="name" placeholder="Type here" class="form-control" id="product_name" />
+                        </div>
+                        <div class="mb-4">
+                            <label for="product_slug" class="form-label">Discount</label>
+                            <input type="number" name="discount" placeholder="Type here" class="form-control" id="product_slug" />
+                        </div>
+                        <div class="mb-4">
+                            <label for="product_slug" class="form-label">Minimum value</label>
+                            <input type="number" name="minimum" placeholder="Type here" class="form-control" id="product_slug" />
+                        </div>
+                        <div class="mb-4">
+                            <label for="product_slug" class="form-label">Maximum value</label>
+                            <input type="number" name="maximum" placeholder="Type here" class="form-control" id="product_slug" />
+                        </div>
+                        <div class="mb-4">
+                            <label for="product_slug" class="form-label">Expiry date</label>
+                            <input type="date" name="expiry" placeholder="Type here" class="form-control" id="product_slug" />
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button class="btn btn-primary">Create Coupon</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-9">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                   
+                                    <th>No:</th>
+                                    <th>Name</th>
+                                    <th>Discount</th>
+                                    <th>Minimum value</th>
+                                    <th>Maximum value</th>
+                                    <th>Expiry date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                                                            
+                                    <% 
+                                        if(coupons.length > 0 ){
+                                            for(let i=0;i<coupons.length;i++){
+                                                %>
+                                                <tr>
+                                                    <td><%= i+1 %> </td>
+                                                    <td><%= coupons[i].name %> </td>
+                                                    <td><%= coupons[i].discount %> % </td>
+                                                    <td>Rs.<%= coupons[i].minimumvalue %> </td>
+                                                    <td>Rs.<%= coupons[i].maximumvalue %> </td>
+                                                    <td><%= coupons[i].expirydate.toDateString() %> </td>
+                                                    <td>
+                                                        <a href="/admin/editcouponload?couponid=<%=coupons[i]._id %>" class="btn btn-primary">Edit</a>
+                                                    <a href="/admin/deletecoupon?couponid=<%=coupons[i]._id %>" class="btn btn-primary">Delete</a></td>
+                                                                     
+                             <td> <a id="<%=coupons[i]._id %>" style="text-decoration: none; color: #d52828;"
+                                     href="/admin/availcoupon?id=<%= coupons[i]._id %>"><% if(coupons[i].isAvailable){ %>Unlist<%}else{%>list<%}%></a></td>
+          
+                                                </tr>
+                                                <%
+                                            }
+                                        }  else{ %>
+                                          <tr>
+                                              <td colspan="5">coupons not found </td>
+                                          </tr>
+                                          <% }  %>                                                                               
+                                </tr>
+                            </tbody>
+        
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>  
+    </section>
+</main>
+
+<%- include("layouts/footer") %>

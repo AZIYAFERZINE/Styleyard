@@ -1,0 +1,101 @@
+<%- include("layouts/sidebar") %>
+<%- include("layouts/header") %>
+
+<section class="content-main">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title"> Categories </h2>
+            <p> Add, edit or delete a category </p>
+        </div>
+        <div>
+            
+
+            <input list="search_terms" type="text" class="form-control" placeholder="Search term" name="search">
+            <input  style="background-color: black;" class="btn btn-primary" type="submit" value="search"> 
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <form method="post" action="/admin/category">
+                        <div class="mb-4">
+                            <label for="product_name" class="form-label">Name</label>
+                            <input type="text" name="name" placeholder="Type here" class="form-control" id="product_name" />
+                        </div>
+                        
+                        <!-- <div class="mb-4">
+                            <label class="form-label">Parent</label>
+                            <select class="form-select">
+                                <option>Clothes</option>
+                                <option>T-Shirts</option>
+                            </select>
+                        </div> -->
+                        <div class="mb-4">
+                            <label class="form-label">Description</label>
+                            <textarea placeholder="Type here" name="description" class="form-control"></textarea>
+                        </div>
+                        <div class="d-grid">
+                            <button style="background-color: black;" class="btn btn-primary">Create category</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-9">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                    <th>Block</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+
+                                 <%
+                                 if(category.length > 0){
+                                    for(let i=0;i<category.length;i++){
+                                        %>
+                                        <tr>
+                                            <td><%= i+1 %></td>
+                                            <td><%= category[i].name %></td>
+                                            <td><%= category[i].description %></td>
+                                            <td>
+                                                <a href="/admin/editCategory?id=<%= category[i]._id %>" style="background-color: black;" class="btn btn-primary">Edit</a>
+                                                <!-- <a href="/admin/deleteCategory?id=<%= category[i]._id %>" style="background-color: black;" class="btn btn-primary">Delete</a> -->
+                                                <a href="#" data-id="<%= category[i]._id %>" class="btn btn-primary delete-category-btn">Delete</a>   
+                                              </td>
+                                              <td> <a id="<%=category[i]._id %>" style="text-decoration: none; color: #d52828;"
+                                                href="/admin/availCategory?id=<%= category[i]._id %>"><% if(category[i].isAvailable){ %>Unlist<%}else{%>list<%}%></a></td> 
+                                        </tr>
+                                      
+                                        <%
+                                    }
+                                    
+                                 }    else{ %>
+                                    <tr>
+                                        <td colspan="5">categories not found </td>
+                                    </tr>
+                                    <% }
+                              %>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div> <!-- .col// -->
+            </div> <!-- .row // -->
+        </div> <!-- card body .// -->
+    </div> <!-- card .// -->
+</section> <!-- content-main end// -->
+
+
+<%- include("layouts/footer") %>
+
+
+
+
+  
+ 

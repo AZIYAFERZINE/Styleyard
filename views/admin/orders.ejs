@@ -1,0 +1,207 @@
+<%- include("layouts/sidebar") %>
+<%- include("layouts/header") %>
+
+<main >
+    
+<section class="content-main">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Order List </h2>
+            <p>Lorem ipsum dolor sit amet.</p>
+        </div>
+        
+    </div>
+    <div class="card mb-4">
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <input type="date" name="startdate" id="startdate" onchange="cli()">
+                    <input type="date" name="enddate" id="enddate" onchange="cli()">
+                    <button type="button" id="pdf">Download</button>
+                    <table class="table text-center border " id="ordersTable">
+                        <tr>
+                            <th scope="col">SL NO</th>
+                            <th scope="col">Order Id</th>
+                            <th scope="col">User Name</th>
+                            <th scope="col">Payment Method</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" class="text-end"> Action </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        <% if(orders.length> 0){ %>
+                            <% for(let i=1;i<=orders.length; i++){ %>  
+
+                        <tr style="height:7rem">
+                            <td><%= i %></td>
+                            <td>
+                                <%= orders[i-1]._id  %> 
+                            </td>
+                            <td>
+                                <%=orders[i-1].userId.name %>
+                            </td>
+                            <td>
+                                <%= orders[i-1].payment.method%> 
+                            </td>
+                            <td>
+                                Rs.<%= orders[i-1].payment.amount%> 
+                                
+                            </td>
+                             <td>
+                                <%= orders[i-1].createdAt.toISOString().slice(0,10) %>
+                            </td>
+                            <td>  
+                                <%= orders[i-1].status%> 
+                            </td>
+                            <td class="text-end">
+                                <a href="/admin/vieworderdetails?id=<%=orders[i-1]._id%>" class="btn btn-md rounded font-sm">Detail</a>
+                                
+                                      <% if (orders[i-1].status!="returned"&& orders[i-1].status != "cancelled"){%>
+                                        <form action="/admin/updatestatus" method="post" style="margin-top:1rem">
+                                            <select name="status" class="browser-default custom-select" value="<%=orders[i-1].status%>">
+                                                <option>Delivered</option>
+                                                <option>Shipped</option>
+                                                <option>packed</option>
+                                              </select>
+                                              <input type="hidden" name="orderId" value="<%=orders[i-1]._id%>">
+                                      <button style="background-color: #95b08f;" type="submit">update</button>
+                                      <%}else{%>
+                                        <%}%>
+                                    </form>
+                                
+                            </td>
+
+                        </tr>
+                        <% } } else{ %>
+                            <tr>
+                                <td colspan="5">Products Not Found</td>
+                            </tr>
+                            <% } %>
+
+                    </tbody>
+                </table>
+            </div> <!-- table-responsive //end -->
+        </div> <!-- card-body end// -->
+    </div> <!-- card end// -->
+    <div class="pagination-area mt-15 mb-50">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-start">
+                <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                <li class="page-item"><a class="page-link" href="#">02</a></li>
+                <li class="page-item"><a class="page-link" href="#">03</a></li>
+                <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                <li class="page-item"><a class="page-link" href="#">16</a></li>
+                <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
+            </ul>
+        </nav>
+    </div>
+</section> <!-- content-main end// -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+
+<!-- SheetJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Download as PDF
+    // console.log(jsPDF);
+    document.getElementById('pdf').addEventListener('click', function () {
+        var doc = new jsPDF();
+        var ordersTable = document.getElementById('ordersTable');
+        var orders = [];
+
+        for (var i = 1; i < ordersTable.rows.length; i++) {
+    var order = {
+      orderId: ordersTable.rows[i].cells[0].innerHTML,
+      product: ordersTable.rows[i].cells[1].innerHTML,
+      price: ordersTable.rows[i].cells[4].innerHTML,
+      method: ordersTable.rows[i].cells[5].innerHTML,
+    };
+    orders.push(order);
+  }
+
+
+        doc.autoTable({
+            html: '#ordersTable',
+            columns: [
+                { header: 'Order ID', dataKey: 'Order ID' },
+                { header: 'Product', dataKey: 'Product' },
+                { header: 'Price', dataKey: 'Price' },
+                { header: 'Method', dataKey: 'Method' },
+                { header: 'Method', dataKey: 'Method' },
+                { header: 'Method', dataKey: 'Method' },
+                { header: 'Method', dataKey: 'Method' },
+
+
+            ]
+        });
+        var totalOrders = orders.length;
+  var totalRevenue = orders.reduce((acc, cur) => acc + parseInt(cur.price), 0).toFixed(2);
+  console.log(totalRevenue)
+
+  doc.text('Order Summary:', 10, doc.autoTable.previous.finalY + 10);
+  doc.text('Total number of orders: ' + totalOrders, 10, doc.autoTable.previous.finalY + 20);
+  doc.text('Total revenue: Rs ' + totalRevenue, 10, doc.autoTable.previous.finalY + 30);
+
+  doc.save('sales.pdf');
+    });
+
+
+    function cli() {
+    start = document.getElementById("startdate").value;
+    end = document.getElementById("enddate").value;
+    console.log(start, end);
+    data = { start: start, end: end };
+    axios.post('/admin/updateorder', data)
+        .then(res => {
+            if (res.data) {
+                console.log(res.data);
+                console.log(res.data.orderDetail);
+                let orders = res.data.orderDetail;
+                let ordersTableHTML = '';
+                let totalOrders = 0;
+                let totalRevenue = 0;
+
+                if (orders.length > 0) {
+                    console.log("hello");
+                    orders.forEach((order, i) => {
+                        ordersTableHTML += `<tr> <th>${i + 1}</th> <td>${order._id}</td> <td>${order.userId.name}</td> <td>${order.payment.method}</td> <td>${order.payment.amount}</td> <td>${order.status}</td> <td>${new Date(order.createdAt).toLocaleDateString()}</td> <td> <a class="text-white btn btn-light" href="/admin/vieworderdetails?id=${order._id}">view Details</a><br> <br> <form action="/admin/updatestatus" method="post"> <select name="status" class="browser-default custom-select"> <option>${order.status}</option> <option>Delivered</option> <option>Shipped</option> <option>packed</option> </select> <input type="hidden" name="orderId" value="${order._id}"> ${order.status !== 'returned' ? '<button style="background-color: darkcyan;" type="submit">update</button>' : ''} </form> </td> </tr> `;
+                        totalOrders += 1;
+                        totalRevenue += order.payment.amount;
+                    });
+                } else {
+                    ordersTableHTML = '<tr><td colspan="5">Products Not Found</td></tr>';
+                }
+                let avgOrderValue = totalRevenue / totalOrders;
+                let orderSummaryHTML = `
+                    <p>Total Orders: ${totalOrders}</p>
+                    <p>Total Revenue: ${totalRevenue}</p>
+                    <p>Average Order Value: ${avgOrderValue}</p>
+                `;
+                // document.getElementById("order-summary").innerHTML = orderSummaryHTML;
+                document.getElementById("tbody").innerHTML = ordersTableHTML;
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        })
+}
+
+
+
+
+
+</script>
+
+<%- include("layouts/footer") %>

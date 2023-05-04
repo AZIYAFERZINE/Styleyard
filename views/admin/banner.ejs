@@ -1,0 +1,76 @@
+<%- include("layouts/sidebar") %>
+<%- include("layouts/header") %>
+
+
+<br>
+
+<h5 class="text-center " style="color: #537254;"> BANNER MANAGEMENT </h5>
+
+<a href="/admin/add-Banners"><button  type="button" class="btn btn-primary mx-3">+ Add Banners</button></a>
+
+<table class="table text-center">
+   <thead>
+     <tr>
+       <th scope="col">SL NO</th>
+       <th scope="col">BANNER NAME</th>
+       <th scope="col">IMAGE</th>
+       <th scope="col">DESCRIPTION</th>
+       <th scope="col">EDIT&HIDE</th>
+
+     </tr>
+   </thead>
+   <tbody>
+     
+     <% for(i=1;i<=banner.length;i++){ %>
+       <tr>
+       <td><%=i%></td>     
+       <td><%=banner[i-1].name%></td>
+       <td>
+
+           <% if(banner[i-1].image) { %>
+               <img src="/uploads/<%= banner[i-1].image[0] %>"
+                   width="100px" height="100px">
+                   <img src="/uploads/<%= banner[i-1].image[1] %>"
+                   width="100px" height="100px">
+                   <img src="/uploads/<%= banner[i-1].image[2] %>"
+                   width="100px" height="100px">
+               <% }else{ %>
+                   Image Not Found
+                   <% } %>
+       </td>
+       <td><%=banner[i-1].description%></td>
+       <td> 
+          <a href="/admin/edit-banner?id=<%- banner[i-1]._id %>"><button type="button" class="btn btn-success">Edit</button></a> 
+          <button type="button" class="btn btn-danger" onclick="confirmDelete('<%= banner[i-1]._id %>')">Delete</button>
+
+         <a id="<%-banner[i-1]._id %>" style="text-decoration: none; color: #056c0c;"
+           href="/admin/hide-banner?id=<%- banner[i-1]._id %>"><% if(banner[i-1].is_active){ %>Disable<%}else{%>Enable<%}%></a>
+          
+       </td>
+     </tr>
+     <%}%>
+   </tbody>
+ </table>
+<br>
+<br>
+<br>
+
+<script>
+  function confirmDelete(bannerId) {
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this banner!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        window.location.href = "/admin/delete-banner?id=" + bannerId;
+      } 
+    });
+  }
+  </script>
+  
+  
+<%- include("layouts/footer") %>

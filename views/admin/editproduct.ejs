@@ -1,0 +1,181 @@
+<%- include("layouts/sidebar") %>
+<%- include("layouts/header") %>
+<script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+
+    <!-- new -->
+    <section class="content-main">
+        <form action="/admin/editproduct?id=<%=products._id %>" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-12">
+                    <div class="content-header">
+                        <h2 class="content-title"> Edit products</h2>
+                        <div>
+                        <form action="" method="post">
+                            <button type="submit" class="btn btn-md rounded font-sm hover-up">Update</button>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>1. General info</h6>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="mb-4">
+                                        <label class="form-label">Name</label>
+                            
+                                        
+                                        <input name="name" type="text" placeholder="Type here" class="form-control" value="<%=products.name%>" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label">Description</label>
+                                        <textarea name="description" type="text" placeholder="Type here" class="form-control" rows="4" required><%=products.description%></textarea>
+                                    </div>
+                                    
+                                </div> <!-- col.// -->
+                            </div> <!-- row.// -->
+                            <hr class="mb-4 mt-0">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>2. Pricing</h6>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="mb-4">
+                                        <label class="form-label">Cost in INR</label>
+                                        <input name="price" type="text" placeholder="RS.00.0" class="form-control" value="<%=products.price%>" required>
+                                    </div>
+                                </div> <!-- col.// -->
+                            </div> <!-- row.// -->
+
+                            <hr class="mb-4 mt-0">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>3. Offer price</h6>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="mb-4">
+                                        <label class="form-label">Cost in INR</label>
+                                        <input name="oprice" type="text" placeholder="RS.00.0" class="form-control" value="<%=products.oprice%>" required>
+                                    </div>
+                                </div> <!-- col.// -->
+                            </div>
+                            <hr class="mb-4 mt-0">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>3. Stock</h6>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="mb-4">
+                                        <label class="form-label">No:of stocks</label>
+                                        <input name="stock" type="number" placeholder="0" class="form-control" value="<%=products.stock %>"required>
+                                    </div>
+                                </div> <!-- col.// -->
+                            </div> <!-- row.// -->
+                            <hr class="mb-4 mt-0">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>4. Category</h6>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="mb-4">
+                                        <label class="form-label">Category list</label>
+                                     
+                                        <select name="mycategory" class="form-select">
+                                            <% categories.forEach(function(categories) { %>
+                                            <option value="<%=categories._id %>"><%= categories.name %></option>
+                                            <% }) %>
+                                            </select>
+                                        
+                                    </div>
+                                </div> <!-- col.// -->
+                            </div> <!-- row.// -->
+                            <hr class="mb-4 mt-0">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>5. Media</h6>
+                                </div>
+
+
+<!-- File Button --> 
+<label for="filebutton">Choose image</label>
+<input class="form-control" type="file" name="productpic" multiple>
+<br>
+<div class="d-flex mb-2 mt-2">
+    <% for(let key of products.image){ %>
+        <div id='<%=key %>' style="padding-right: 4px; ">  
+        <div class="d-flex align-items-center justify-content-center position-relative " style="border: 1px solid rgb(236, 236, 236);border-radius: 8px;height: 85px;width: 78px;">  
+          <button style="color: aliceblue;" type="button" onclick="cut('<%=key%>')" class="close position-absolute z-3 top-0 end-0 bg-transparent shadow-none " aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>                            
+          <img src="/uploads/<%=key %>" class="img-thumbnail rounded" width="60px" height="60px" style="border: 4px;" alt="">
+        </div>
+    </div>
+        <%}%>    
+    </div>
+
+
+
+<!-- Button -->
+<div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+<input type="hidden" value="<%=products._id%>" id="pId"/>
+<button type="submit" value="Register" class="btn btn-success btn-lg">Save Edits</button>
+<a href="/admin/product" class="btn btn-outline-light ml-2 btn-lg ms-3">Go Back</a>
+</div>
+</fieldset>
+</form>
+
+
+
+
+                               
+                            </div> <!-- .row end// -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </form>
+        <div>
+            <h4  id="message"style="color: rgb(26, 82, 28);"><%= message %></h4>
+        </div>
+        </section>
+        <script>
+            $(document).ready(function() {
+                $('#message').fadeIn('slow');
+                setTimeout(function() {
+                    $('#message').fadeOut('slow');
+                }, 2000);
+            });
+        </script>
+        
+        <script>
+
+            function cut(id) {
+              pId = document.getElementById('pId').value 
+              document.getElementById(id).innerHTML=''  
+              const data = {img:id , pId:pId}
+              console.log(id,pId);
+              axios.post('/admin/deleteimage', data)
+              .then(res => {
+                if(res.data){
+                  console.log(res.data);
+          
+                }
+              })
+              .catch(error => {
+                console.log(error);
+              })
+            console.log('This was logged in the callback: ' + result);}
+          
+          </script>
+    <!-- new -->
+
+
+<%- include("layouts/footer") %>

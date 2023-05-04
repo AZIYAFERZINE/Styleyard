@@ -1,0 +1,133 @@
+<%- include("layouts/sidebar") %>
+<%- include("layouts/header") %>
+
+
+<section class="content-main" >
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-12">
+                <div class="content-header">
+                    <h2 class="content-title">Add New Product</h2>
+                    <div>
+                  
+                        <button style="background-color: black;" type="submit" class="btn btn-md rounded font-sm hover-up">Add</button>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6>1. General info</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="mb-4">
+                                    <label class="form-label">Name</label>
+                                    <input name="name" type="text" placeholder="Type here" class="form-control">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Description</label>
+                                    <textarea name="description" placeholder="Type here" class="form-control" rows="4"></textarea>
+                                </div>
+                             
+                            </div> <!-- col.// -->
+                        </div> <!-- row.// -->
+                        <hr class="mb-4 mt-0">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6>2. Pricing</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="mb-4">
+                                    <label class="form-label">Cost in INR</label>
+                                    <input name="price" type="Number" placeholder="RS.00.0" class="form-control">
+                                </div>
+                                <!-- col.// -->
+                        </div> <!-- row.// -->
+                        <div class="col-md-3">
+                            <h6>4. Offer price</h6>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="mb-4">
+                                <label class="form-label">Cost in INR</label>
+                                <input name="oprice" type="Number" placeholder="RS.00.0" class="form-control">
+                            </div>
+                    </div>
+                    <hr class="mb-4 mt-0">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h6>5. Stock</h6>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="mb-4">
+                             
+                                <input name="stock" type="Number" placeholder="" class="form-control"  required>
+                            </div>
+                            </div>
+                        <hr class="mb-4 mt-0">
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6>6.Category</h6>
+                            </div>
+
+                            <div class="col-md-9">
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Category list</label>
+                                 
+                                    <select name="mycategory" class="form-select">
+                                        <% categories.forEach(function(categories) { %>
+                                        <option value="<%=categories._id %>"><%= categories.name %></option>
+                                        <% }) %>
+                                        </select>
+                                    
+                                </div>
+                            </div> <!-- col.// -->
+                        </div> <!-- row.// -->
+
+                        <hr class="mb-4 mt-0">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6>7. Media</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="mb-4">
+                                    <label class="form-label">Images</label>
+                                    <input class="form-control" type="file" name="productpic" multiple>
+                                </div>
+                                <h4  id="message"style="color: rgb(26, 82, 28);"><%= message %></h4>
+    
+                            </div> 
+                        </div> <!-- .row end// -->
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+        </div>
+    </form>
+    <div>
+    
+    </div>
+    </section>
+    
+
+<style>
+    .content-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+</style>
+
+
+
+
+<%- include("layouts/footer") %>

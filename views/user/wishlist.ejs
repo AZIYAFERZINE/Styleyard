@@ -1,0 +1,193 @@
+<%- include("layouts/header") %>
+<style>
+    .shop-cart {
+  padding: 50px 0;
+  background-color: #f5f5f5;
+}
+
+.shop__cart__table {
+  margin-bottom: 30px;
+}
+
+.shop__cart__table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.shop__cart__table th {
+  text-align: left;
+  font-weight: 700;
+  padding: 10px;
+}
+
+.shop__cart__table td {
+  vertical-align: middle;
+  padding: 10px;
+}
+
+.cart__product__item {
+  display: flex;
+  align-items: center;
+}
+
+.cart__product__item img {
+  margin-right: 20px;
+}
+
+.cart__product__item h6 {
+  margin-bottom: 5px;
+}
+
+.cart__price {
+  font-weight: 700;
+}
+
+.btn {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.8;
+  
+}
+
+.size-119 {
+  font-size: 14px;
+  padding: 10px 25px;
+  letter-spacing: 1px;
+}
+
+.bg8 {
+  background-color: #000;
+  color: #fff;
+}
+
+.bor13 {
+  border-radius: 13px;
+}
+</style>
+
+    <!-- Breadcrumb Begin -->
+    
+    <div class="container">
+        <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+            <a href="/" class="stext-109 cl8 hov-cl1 trans-04">
+                Home
+                <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+            </a>
+    
+            <span class="stext-109 cl4">
+               Wishlist
+            </span>
+        </div>
+    </div>
+<!-- Breadcrumb End -->
+
+      <!-- wishlist Begin -->
+      <section class="shop-cart spad">
+        <div class="container">
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shop__cart__table">
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Action</th>
+                                    
+                               <th>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(wishlistproducts.length > 0 ){
+                                    for(let i=0;i<wishlistproducts.length;i++){
+                                        %>
+                                        <tr>
+                                            <% if(wishlistproducts[i].image.length > 0){ %>
+                                                <td class="cart__product__item">
+                                                    <img style="height:5rem;width:5rem" src="/uploads/<%= wishlistproducts[i].image[0] %>" alt="">
+                                                    <div class="cart__product__item__title">
+                                                        <h6><%= wishlistproducts[i].name %></h6>
+                                                       
+                                                    </div>
+                                                </td>
+                                            <% } %>
+                                
+                                            
+                                            <td class="cart__price"><%= wishlistproducts[i].oprice %></td>
+                                            <form class="addtocart-form" data-productid="<%= wishlistproducts[i]._id %>" >
+                                            <td><button  class="btn"style="background-color: black;" type="submit"><a style="text-decoration: none; color: #fff;" href="/cartadding?id=<%= wishlistproducts[i]._id %>">Add to cart</a></button></td>
+                                            
+
+                                            
+                                            <td class="cart__close">
+                                                <!-- <a href="/removefromwishlist?productid=<%=wishlistproducts[i]._id%>"><span class="icon_close"></span></a> -->
+                                                <a href="#" onclick="confirmDelete('<%=wishlistproducts[i]._id%>')"><span class="icon_close"></span></a>
+                                              </td>
+                                              <td id="lottie-container" ></td>
+                                              
+
+                                        </tr>
+                                        <%
+                                    }
+                                } else{ %>
+                                    <tr>
+                                        <td style="text-align: center;" colspan="5">No products in wishlist</td>
+                                    </tr>
+                                <% } %>
+                                
+                                
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+                    <a href="/products" style="color: rgb(254, 254, 254);">Continue Shoping</a>
+                </div>
+                
+            </div>
+         
+        </div>
+       </section>
+    <!-- wishlist End -->
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+    function confirmDelete(productId) {
+      swal({
+        title: "Are you sure?",
+        text: "This product will be removed from your wishlist.",
+        icon: "warning",
+        buttons: ["Cancel", "Delete"],
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          window.location.href = "/removefromwishlist?productid=" + productId;
+        }
+      });
+    }
+    </script>
+
+
+
+
+
+
+
+
+    <%- include("layouts/footer") %>
+

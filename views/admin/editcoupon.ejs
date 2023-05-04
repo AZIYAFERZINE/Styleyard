@@ -1,0 +1,59 @@
+<%- include("layouts/sidebar") %>
+<%- include("layouts/header") %>
+
+<main>
+    
+    <section class="content-main">
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title">Coupons </h2>
+                <p> edit coupons</p>
+            </div>
+        </div>
+       
+    
+     <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <form action="/admin/editcoupon?couponid=<%= coupons._id%>" method="post">
+                        <div class="mb-4">
+                            <label for="product_name" class="form-label">Name</label>
+                            <input type="text" name="name" placeholder="Type here" class="form-control" value="<%=coupons.name%>" id="product_name" required/>
+                        
+                        </div>
+                        <div class="mb-4">
+                            <label for="product_slug" class="form-label">Discount</label>
+                            <input type="number" name="discount" placeholder="Type here" class="form-control" id="product_slug" value="<%=coupons.discount%>" required />
+
+                        </div>
+                        <div class="mb-4">
+                            <label for="product_slug" class="form-label">Minimum value</label>
+                            <input type="number" name="minimum" class="form-control" id="product_slug" value="<%=coupons.minimumvalue%>" required />
+
+                        </div>
+                        <div class="mb-4">
+                            <label for="product_slug" class="form-label">Minimum value</label>
+                            <input type="number" name="maximum" class="form-control" id="product_slug" value="<%=coupons.maximumvalue%>" required />
+
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="product_slug" class="form-label">Expiry date</label>
+                            <input type="date" name="expiry" class="form-control" id="product_slug" value="<%=coupons.expirydate%>" required />
+
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-primary">Update Coupon</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+     </div>
+    
+   
+    </section>
+</main>
+
+<%- include("layouts/footer") %>

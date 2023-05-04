@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>STYLEYARD</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="/assets/images/icons/favicon.png"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/assets/fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/assets/fonts/linearicons-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/assets/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/assets/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/assets/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/assets/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/assets/vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/assets/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+<!--===============================================================================================-->
+</head>
+
+	
+	<!-- Header -->
+	<header class="header-v4">
+		<!-- Header desktop -->
+		<div class="container-menu-desktop">
+			<!-- Topbar -->
+			<div class="top-bar">
+				<div class="content-topbar flex-sb-m h-full container">
+					<div class="left-top-bar">
+						Go with fashion by Style Yard
+					</div>
+
+					<div class="right-top-bar flex-w h-full">
+						<a href="#" class="flex-c-m trans-04 p-lr-25">
+							Help & FAQs
+						</a>
+
+
+
+						 <% if (loggedIn) { %>
+							<!-- <div><%=userData %></div> -->
+
+							<a href="/logout" class="flex-c-m trans-04 p-lr-25">
+								Logout
+							</a>
+                               
+
+							<a href="" class="flex-c-m trans-04 p-lr-25">
+								Welcome <%= userData %>
+							</a>
+
+							<% } else { %>
+
+						<a href="/login" class="flex-c-m trans-04 p-lr-25">
+							Login
+						</a>
+
+						<a href="/register" class="flex-c-m trans-04 p-lr-25">
+							Register
+						</a>
+
+						<% } %>
+
+
+						<a href="#" class="flex-c-m trans-04 p-lr-25">
+							USD
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="wrap-menu-desktop how-shadow1">
+				<nav class="limiter-menu-desktop container"> 
+					
+					<!-- Logo desktop -->		
+					<a href="#" class="logo">
+						<img src="/assets/images/icons/logo-01.png" alt="IMG-LOGO" height="250" width="200">
+					</a>
+
+					<!-- Menu desktop -->
+					<div class="menu-desktop">
+						<ul class="main-menu">
+							<li>
+								<a href="/">Home</a>
+								
+							</li>
+
+							<li>
+								<a href="/products">Shop</a>
+							</li>
+
+							<li >
+								<a href="">Categories</a>
+							
+								<ul class="sub-menu">
+									<% for (var i = 0; i<categories.length; i++) { %>
+									<li><a href="/products?categoryid=<%= categories[i]._id %>"><%= categories[i].name %></a></li>
+									<% } %>
+								</ul>
+								
+							</li>
+
+                             <li >
+								<a href="/cartload">My cart</a>
+							</li>
+
+							<li>
+								<a href="/profileload">My profile</a>
+							</li>
+
+							<li>
+								<a href="/contact">About</a>
+							</li>
+						</ul>
+					</div>	
+
+					<!-- Icon header -->
+					<div class="wrap-icon-header flex-w flex-r-m">
+						
+
+						<a href="/cartload" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart" data-notify="2">
+							<i class="zmdi zmdi-shopping-cart"></i>
+						</a>
+
+						<a href="/wishlistload" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 " data-notify="0">
+							<i class="zmdi zmdi-favorite-outline"></i>
+						</a>
+					</div>
+				</nav>
+			</div>	
+		</div>
+
+		<!-- code deleted from here is saved in notepad -->
+
+
+		
+	</header>
+
+		
+	
+
+	<!-- Slider -->
+	<br>
+	
+	<div class="sec-banner">
+		<div class="container">
+			<div class="row">
+
+
+		<% if(banner) {%>
+			<div class="container-fluid mb-3 ">
+				<div class="row px-xl-5 justify-content-center">
+					<div class="col-lg-12">
+						<div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
+							<ol class="carousel-indicators">
+								<li data-target="#header-carousel" data-slide-to="0" class="active"></li>
+								<li data-target="#header-carousel" data-slide-to="1"></li>
+								<li data-target="#header-carousel" data-slide-to="2"></li>
+							</ol>
+							<div class="carousel-inner ">
+								<div class="carousel-item position-relative active" style="height: 460px; width: 100%;">
+									<img class="position-absolute w-100 h-100" src="/uploads/<%=banner.image[0]%>" style="object-fit: cover;">
+									<div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+										<div class="p-3" style="max-width: 700px;">
+											<h1 class="display-4 text-white mb-3 animate_animated animate_fadeInDown" style="background-color: rgb(182, 84, 84);"> Fashion</h1>
+											<p class="mx-md-5 px-5 animate_animated animate_bounceIn"style="background-color:rgb(182, 84, 84);;"><%-banner.description%></p>
+											<a class="btn btn-outline-light py-2 px-4 mt-3 animate_animated animate_fadeInUp" href="/products"style="background-color:rgb(182, 84, 84);;">Shop Now</a>
+										</div>
+									</div>
+								</div>
+								<% for(i=1;i<=banner.image.length;i++){%>
+								<div class="carousel-item position-relative" style="height: 460px; width: 100%;">
+									<img class="position-absolute w-100 h-100" src="/uploads/<%=banner.image[i]%>" style="object-fit: cover;">
+									<div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+										<div class="p-3" style="max-width: 700px;">
+											<h1 class="display-4 text-white mb-3 animate_animated animate_fadeInDown" style="background-color:rgb(182, 84, 84);;">Fashion</h1>
+											<p class="mx-md-5 px-5 animate_animated animate_bounceIn" style="background-color:rgb(182, 84, 84);;"><%-banner.description%></p>
+											<a class="btn btn-outline-light py-2 px-4 mt-3 animate_animated animate_fadeInUp" href="/products" style="background-color:rgb(182, 84, 84);;">Shop Now</a>
+										</div>
+									</div>
+								</div>
+								<div class="carousel-item position-relative" style="height: 460px; width: 100%;">
+									<img class="position-absolute w-100 h-100" src="/uploads/<%=banner.image[i+1]%>" style="object-fit: cover;">
+									<div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+										<div class="p-3" style="max-width: 700px;">
+											<h1 class="display-4 text-white mb-3 animate_animated animate_fadeInDown" style="background-color:rgb(182, 84, 84);;">Fashion</h1>
+											<p class="mx-md-5 px-5 animate_animated animate_bounceIn" style="background-color:rgb(182, 84, 84);;"><%-banner.description%></p>
+											<a class="btn btn-outline-light py-2 px-4 mt-3 animate_animated animate_fadeInUp" href="/products" style="background-color:rgb(182, 84, 84);;">Shop Now</a>
+										</div>
+									</div>
+								</div>
+											   
+							</div>
+						</div>
+					</div>
+					
+					
+				</div>
+			</div> 
+								<% } }
+								 else { %>
+								 <div class="container-fluid mb-3 ">
+									<div class="row px-xl-5 justify-content-center">
+										<div class="col-lg-8">
+											<div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
+												<ol class="carousel-indicators">
+													<li data-target="#header-carousel" data-slide-to="0" class="active"></li>
+													<li data-target="#header-carousel" data-slide-to="1"></li>
+													<li data-target="#header-carousel" data-slide-to="2"></li>
+												</ol>
+												<div class="carousel-inner ">
+													<div class="carousel-item position-relative active" style="height: 430px;">
+														<img class="position-absolute w-100 h-100" src="" alt="image not found" style="object-fit: cover;">
+														<div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+															<div class="p-3" style="max-width: 700px;">
+																<h1 class="display-4 text-white mb-3 animate_animated animate_fadeInDown">Nothing to show..!</h1>
+																<p class="mx-md-5 px-5 animate_animated animate_bounceIn"></p>
+																<a class="btn btn-outline-light py-2 px-4 mt-3 animate_animated animate_fadeInUp" href="#">Shop Now</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+									   
+									</div>
+								</div>
+								 <%}%>
+
+
+			</div>
+		</div>
+	</div>
+	
+
+
+	<!-- Banner -->
+	<div class="sec-banner bg0 p-t-80 p-b-50">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+					<!-- Block1 -->
+					<div class="block1 wrap-pic-w">
+						<img src="/assets/images/banner-01.jpg" alt="IMG-BANNER">
+
+						<a  href="/products?categoryid=<%= categories[1]._id %>" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+							<div class="block1-txt-child1 flex-col-l">
+								<span class="block1-name ltext-102 trans-04 p-b-8">
+									Clothing
+								</span>
+
+								<span class="block1-info stext-102 trans-04">
+									Spring 2018
+								</span>
+							</div>
+
+							<div class="block1-txt-child2 p-b-4 trans-05">
+								<div class="block1-link stext-101 cl0 trans-09">
+									Shop Now
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+					<!-- Block1 -->
+					<div class="block1 wrap-pic-w">
+						<img src="/assets/images/banner-02.jpg" alt="IMG-BANNER">
+
+						<a  href="/products?categoryid=<%= categories[0]._id %>" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+							<div class="block1-txt-child1 flex-col-l">
+								<span class="block1-name ltext-102 trans-04 p-b-8">
+								Shoes
+								</span>
+
+								<span class="block1-info stext-102 trans-04">
+									Spring 2018
+								</span>
+							</div>
+							<div class="block1-txt-child2 p-b-4 trans-05">
+								<div class="block1-link stext-101 cl0 trans-09">
+									Shop Now
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>				
+				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+					<!-- Block1 -->
+					<div class="block1 wrap-pic-w">
+						<img src="/assets/images/banner-03.jpg" alt="IMG-BANNER">
+
+						<a  href="/products?categoryid=<%= categories[2]._id %>" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+							<div class="block1-txt-child1 flex-col-l">
+								<span class="block1-name ltext-102 trans-04 p-b-8">
+									Bags
+								</span>
+
+								<span class="block1-info stext-102 trans-04">
+									Spring 2018
+								</span>
+							</div>
+
+							<div class="block1-txt-child2 p-b-4 trans-05">
+								<div class="block1-link stext-101 cl0 trans-09">
+									Shop Now
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+
+				
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+	
+
+
+
+	<%- include("layouts/footer") %>

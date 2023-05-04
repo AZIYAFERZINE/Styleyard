@@ -1,0 +1,75 @@
+<%- include("layouts/sidebar") %>
+<%- include("layouts/header") %>
+<body>
+  <div class="screen-overlay"></div>
+  
+  
+             
+<div style="padding-left: 2rem;" class="card mb-4">
+  <header class="card-header">
+      <h4 class="card-title">User Info</h4>
+  </header>
+ 
+<div class="card-body">
+      <div class="table-responsive"  >
+          <div class="table-responsive">
+              <table class="table align-middle table-nowrap mb-0" >
+                  <thead  class="table-light"  style="background-color:rgb(91, 161, 120)">
+                      <tr>
+                        <th class="align-middle" scope="col">Sl.no</th>
+                          <th class="align-middle" scope="col">Name</th>
+                          <th class="align-middle" scope="col">Email</th>
+                          <th class="align-middle" scope="col">Mobile</th>
+                          <th class="align-middle" scope="col">Action</th>
+                         
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <% if (users.length > 0) {
+                      for (let i = 0; i < users.length; i++) { %>
+                        <tr style="background-color:rgb(207, 213, 210)">
+                          <td><%= i + 1 %></td>
+                          <td><%= users[i].name %></td>
+                          <td><%= users[i].email %></td>
+                          <td><%= users[i].phone %></td>
+                          <td>
+                            <% if (users[i].blocked) { %>
+                              <button onclick="confirmUnblock('<%= users[i]._id %>')" style="background-color: rgb(222, 219, 219);" class="btn btn-warning">Unblock</button>
+                            <% } else { %>
+                              <button onclick="confirmBlock('<%= users[i]._id %>')" style="background-color: black;" class="btn btn-primary">Block</button>
+                            <% } %>
+                          </td>
+                        </tr>
+                      <% }
+                    } else { %>
+                      <tr>
+                        <td colspan="5">Users not found</td>
+                      </tr>
+                    <% } %>
+                  </tbody>
+              </table>
+          </div>
+      </div> <!-- table-responsive end// -->
+  </div>
+ 
+  <script>
+    function confirmBlock(id) {
+      if (confirm("Are you sure you want to block this user?")) {
+        window.location.href = "/admin/blockuser?id=" + id;
+      }
+    }
+  
+    function confirmUnblock(id) {
+      if (confirm("Are you sure you want to unblock this user?")) {
+        window.location.href = "/admin/blockuser?id=" + id;
+      }
+    }
+  </script>
+  
+  
+  
+  
+  
+  
+  
+        <%- include("layouts/footer") %>

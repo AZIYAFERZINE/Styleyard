@@ -1,0 +1,84 @@
+<%- include("layouts/sidebar") %>
+<%- include("layouts/header") %>
+
+<section class="content-main">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Product list</h2>
+            <p>Here you can see the added products</p>
+        </div>
+        <div>
+           
+            <a href="/admin/addProducts" style= "background-color: black;" class="btn btn-primary btn-sm rounded">Add new</a>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <header class="card-header">
+            <div class="row gx-3">
+                
+                
+                <div class="col-lg-2 col-6 col-md-3">
+                    <select class="form-select">
+                        <% category.forEach(function(category) { %>
+                        <option  value="<%=category._id %>"><%= category.name %></option>
+                        <% }) %>
+                    </select>
+                </div>
+            
+            </div>
+        </header> <!-- card-header end// -->
+     
+        <div class="card-body">
+            
+            <div class="row gx-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5">
+                <% Product.forEach(function(Product){ %>
+                <div class="col">
+                    <div class="card card-product-grid">
+                       
+                        <% if(Product.image.length > 0){ %>
+                            <img style="height:17rem;width:15.5rem" src="/uploads/<%= Product.image[0] %>" alt="<%= Product.name %>">
+                        <% } %>
+
+                            <!-- <img style="height:17rem;width:15.5rem" src="/uploads/<%= Product.image %>" alt="<%=Product.name %>"> -->
+                            
+                        <div class="info-wrap">
+                            <h5 class="title text-truncate"><%= Product.name %></h5>
+                            <div class="price mb-2">Price Rs<%= Product.price %></div> 
+                            <div class="price mb-2">Offer Rs<%= Product.oprice %></div><!-- price.// -->
+                             <h5 class="title text-truncate"><%= Product.category.name %></h5>
+
+                            <a  href="/admin/editproduct?id=<%= Product._id %>" class="btn btn-sm font-sm rounded btn-brand" style="background-color: black;">
+                                <i class="material-icons md-edit"></i> Edit
+                            </a>
+                            <!-- <a href="/admin/deleteproduct?id=<%= Product._id %>" class="btn btn-sm font-sm btn-light rounded"  style="background-color: black;">
+                                <i class="material-icons md-delete_forever"></i> Delete
+                            </a> -->
+                            <a href="/admin/deleteproduct?id=<%= Product._id %>" class="btn btn-sm font-sm btn-light rounded" style="background-color: black;" onclick="event.preventDefault(); deleteProductConfirmation(this);">
+                                <i class="material-icons md-delete_forever"></i> Delete
+                            </a>
+                        </div>
+                        
+                    </div> 
+                </div> <% }) %>
+                
+            </div> <!-- row.// -->  
+            
+        </div> 
+    </div> <!-- card end// -->
+   
+    <div class="pagination-area mt-30 mb-50">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-start">
+                <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                <li class="page-item"><a class="page-link" href="#">02</a></li>
+                <li class="page-item"><a class="page-link" href="#">03</a></li>
+                <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                <li class="page-item"><a class="page-link" href="#">16</a></li>
+                <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
+            </ul>
+        </nav>
+    </div>
+</section>
+
+
+<%- include("layouts/footer") %>
