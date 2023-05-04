@@ -2,7 +2,7 @@
 
 
 const mongoose = require("mongoose");
-const User = require('../models/userModel')
+const User = require('../models/usermodel')
  module.exports=async (req, res, next) => {
     try {
       if (req.session.user_id) {

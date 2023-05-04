@@ -2,7 +2,7 @@ const Category = require("../models/category")
 const Product = require("../models/product")
 const order = require("../models/ordermodel")
 const address = require("../models/address")
-const User = require('../models/userModel')
+const User = require('../models/usermodel')
 const Razorpay = require('razorpay');
 require('dotenv').config()
 

@@ -1,4 +1,4 @@
-const User = require('../models/userModel')
+const User = require('../models/usermodel')
 const Product = require('../models/product')
 const Category = require("../models/category")
 

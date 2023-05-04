@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const User = require('../models/userModel')
+const User = require('../models/usermodel')
 const addressSchema = new mongoose.Schema({
     userId: {
       type: mongoose.Types.ObjectId,
